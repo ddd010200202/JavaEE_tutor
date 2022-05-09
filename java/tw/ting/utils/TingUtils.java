@@ -69,5 +69,12 @@ public class TingUtils {
 		}
 		return y;
 	}
+	public static String createScore() {
+		
+		return (int)(Math.random()*101)+"";
+	}
+	public static String encPasswd(String plain) {
+		return BCrypt.hashpw(plain, BCrypt.gensalt());
+	}
 	
 }
