@@ -76,5 +76,8 @@ public class TingUtils {
 	public static String encPasswd(String plain) {
 		return BCrypt.hashpw(plain, BCrypt.gensalt());
 	}
+	public static boolean isKeyword(String source ,String key) {
+		return source.contains(key);
+	}
 	
 }
