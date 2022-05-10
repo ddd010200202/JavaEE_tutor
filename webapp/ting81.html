@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<title>Rong Ting Company</title>
+		<script>
+			$(document).ready(
+				function() {
+					$('#mybtn').click(
+						function(){
+							$('#here').load(
+							"ting82.jsp",function(responseText,status,xhttp){
+									if(status=='success'){
+										console.log("ok")
+										$('#here').html(responseText)
+									}
+								}		
+							);
+						}		
+					);
+					$('#myget').click(
+							function(){
+								$.get('ting83.jsp',
+									function(responseText,status){
+									if(status=='success'){
+										$('#here2').html(responseText)										
+										}
+									}		
+								)
+							}
+						);
+					$('#mypost').click(
+							function(){
+								$.post('ting84.jsp',
+										{
+											"name":"ting",
+											"age":18
+										},
+									function(responseText,status){
+									if(status=='success'){
+										$('#here3').html(responseText)										
+										}
+									}		
+								)
+							}
+						);
+					$('#myajaxget').click(
+						function(){
+							$.ajax({
+								url:"ting83.jsp",
+								success:function(responseText){
+									$('#here4').html(responseText)
+								}
+							})
+						}		
+					)
+					$('#myajaxpost').click(
+						function(){
+							$.ajax({
+								url:"ting84.jsp",
+								method:'post',
+								data:{
+									"name":"ting",
+									"age":18
+								},
+								success:function(responseText){
+									$('#here5').html(responseText)
+								}
+							})
+						}		
+					)
+				}		
+			);	
+			var page;
+			function test1(p) {
+				$.ajax({
+					url:"ting85.jsp?page="+p,
+					type:"get",
+					success:doSuccess,
+					error:doError
+				})
+			}
+			function doSuccess(json) {
+				var a =JSON.stringify(json);
+				var jsonObj =$.parseJSON(json)
+				page=jsonObj.page;
+				if(jsonObj.error!=0)return;
+				$('#table').empty();
+				$(jsonObj.data).each(
+					function(i,val){
+						console.log(val.name + ":" + val.address);
+						$('#table').append(
+							'<tr>' +
+							'<td>' + val.name + '</td>' + 
+							'<td>' + val.address + '</td>' + 
+							'</tr>'
+						);
+					}
+				);
+			}
+			function doError() {
+				console.log("error")
+			}
+			function prev() {
+				test1(--page)
+			}
+			function next() {
+				test1(++page)
+			}
+		</script>
+	</head>
+	<body>
+		<input type="button" id="mybtn" value="Test1">
+		<div id="here"></div>
+		<!-- ajaxget  -->
+		<input type="button" id="myget" value="Test2">
+		<div id="here2"></div>
+		<!-- ajax  -->
+		<input type="button" id="mypost" value="Test3">
+		<div id="here3"></div>
+		<!-- ajaxget 簡單 -->
+		<input type="button" id="myajaxget" value="Test4">
+		<div id="here4"></div>
+		<!-- ajaxpost 簡單 -->
+		<input type="button" id="myajaxpost" value="Test5">
+		<div id="here5"></div>
+		<hr>
+		<input type="button" value="load" onclick="test1(1)">
+		<input type="button" value="prev" onclick="prev()">
+		<input type="button" value="next" onclick="next()">
+		<table border="1" width=100% id="table">
+		</table>
+	</body>
+</html>

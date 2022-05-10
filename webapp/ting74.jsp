@@ -16,7 +16,7 @@ Page2
 <hr>
 ${member.account}:${member.realname}
 <hr>
-<a href="ting73.jsp">Page1</a>
+<a href="ting73[].jsp">Page1</a>
 <a href="Logout.jsp">Logout</a>
 </body>
 </html>
